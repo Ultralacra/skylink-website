@@ -1,0 +1,118 @@
+---
+const phone = '584125958838';
+const message = 'Hola, me gustaría obtener más información sobre sus servicios de desarrollo de software.';
+const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+---
+
+<a href={url} class="whatsapp-float interactive" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16.003 3.2A12.79 12.79 0 003.2 16c0 2.254.588 4.454 1.707 6.396L3.2 28.8l6.595-1.73A12.762 12.762 0 0016.003 28.8 12.79 12.79 0 0028.8 16 12.79 12.79 0 0016.003 3.2zm0 23.41a10.58 10.58 0 01-5.4-1.48l-.387-.23-4.015 1.053 1.07-3.913-.252-.4A10.56 10.56 0 015.39 16c0-5.855 4.76-10.615 10.614-10.615S26.618 10.145 26.618 16s-4.76 10.61-10.615 10.61zm5.82-7.948c-.32-.16-1.887-.93-2.18-1.036-.293-.107-.506-.16-.72.16-.213.319-.826 1.036-1.013 1.25-.186.212-.373.238-.693.079-.32-.16-1.35-.497-2.572-1.586-.95-.847-1.592-1.893-1.779-2.213-.187-.32-.02-.493.14-.652.145-.143.32-.373.48-.56.16-.186.213-.319.32-.532.106-.213.053-.4-.027-.559-.08-.16-.72-1.733-.986-2.373-.26-.623-.524-.539-.72-.549-.186-.008-.4-.01-.613-.01a1.176 1.176 0 00-.853.4c-.293.32-1.12 1.093-1.12 2.666s1.147 3.093 1.307 3.306c.16.213 2.256 3.444 5.468 4.83.764.33 1.36.527 1.825.674.767.244 1.466.21 2.018.127.615-.092 1.887-.771 2.153-1.517.267-.745.267-1.383.187-1.517-.08-.133-.293-.213-.613-.373z" fill="currentColor"/>
+  </svg>
+  <span class="whatsapp-tooltip">¿Hablamos?</span>
+</a>
+
+<style>
+  .whatsapp-float {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 9990;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: whatsappEntry 0.6s 3s both cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: none;
+  }
+
+  .whatsapp-float svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(37, 211, 102, 0.5), 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .whatsapp-float::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(37, 211, 102, 0.3);
+    animation: whatsappPulse 2s infinite;
+  }
+
+  @keyframes whatsappPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0; }
+  }
+
+  @keyframes whatsappEntry {
+    from {
+      opacity: 0;
+      transform: scale(0) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .whatsapp-tooltip {
+    position: absolute;
+    right: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    color: #1a1a1a;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, transform 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .whatsapp-tooltip::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 6px solid transparent;
+    border-left-color: white;
+    border-right: none;
+  }
+
+  .whatsapp-float:hover .whatsapp-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-4px);
+  }
+
+  @media (max-width: 768px) {
+    .whatsapp-float {
+      bottom: 1.25rem;
+      right: 1.25rem;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
+    .whatsapp-float svg {
+      width: 26px;
+      height: 26px;
+    }
+    .whatsapp-tooltip { display: none; }
+  }
+</style>

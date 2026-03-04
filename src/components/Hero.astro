@@ -1,0 +1,128 @@
+---
+---
+
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-logo">
+      <img src="/logos/S Blanco.png" alt="" width="60" height="60" />
+    </div>
+
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      <span>Desarrollo de Software</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span>Transformando Ideas en</span>
+      <span class="text-gradient">Soluciones Digitales</span>
+    </h1>
+
+    <div class="hero-image">
+      <img src="/NQUbam0dqFbjpm2eo0thkkx7lM.avif" alt="Skylink - Soluciones Digitales" />
+    </div>
+
+    <p class="hero-description">
+      Desarrollo de software a medida, plugins para WordPress y SEO optimizado.
+      Creamos tecnología que impulsa tu negocio hacia el éxito.
+    </p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 2rem 4rem;
+    background: #000;
+  }
+
+  .hero-content {
+    text-align: center;
+    max-width: 1000px;
+    width: 100%;
+  }
+
+  .hero-logo {
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-light);
+    border-radius: 50%;
+  }
+
+  .hero-title {
+    font-family: var(--font-heading);
+    font-size: 60px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-title span {
+    display: block;
+  }
+
+  .text-gradient {
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-image {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 2.5rem;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .hero-description {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .hero { padding: 7rem 1.25rem 3rem; }
+    .hero-title { font-size: 36px; }
+    .hero-image { max-width: 100%; }
+    .hero-description { font-size: 0.95rem; }
+  }
+</style>

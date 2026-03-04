@@ -1,0 +1,407 @@
+---
+const services = [
+  {
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="10" width="36" height="28" rx="3" stroke="currentColor" stroke-width="2"/><path d="M16 22L20 26L16 30" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="24" y1="30" x2="32" y2="30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+    title: 'Desarrollo de Software a Medida',
+    description: 'Creamos aplicaciones web y móviles personalizadas que se adaptan perfectamente a las necesidades específicas de tu negocio.',
+    tags: ['Aplicaciones Web', 'APIs REST', 'Sistemas de Gestión', 'Integración'],
+    gradient: 'gradient-purple',
+    number: '01'
+  },
+  {
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="18" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 30C12 30 14 24 24 24C34 24 36 30 36 30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M24 38V32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18 36L24 32L30 36" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    title: 'Análisis de Factibilidad Técnica',
+    description: 'Evaluamos la viabilidad técnica de tu proyecto, identificando riesgos, recursos necesarios y la mejor estrategia.',
+    tags: ['Evaluación', 'Análisis de Riesgos', 'Estimación', 'Roadmap'],
+    gradient: 'gradient-cyan',
+    number: '02'
+  },
+  {
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8L28 16L38 18L30 26L32 36L24 32L16 36L18 26L10 18L20 16L24 8Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>`,
+    title: 'Mantenimiento y Arquitectura Cloud',
+    description: 'Diseñamos, implementamos y mantenemos infraestructuras cloud escalables y seguras para tu aplicación.',
+    tags: ['Cloud', 'DevOps', 'Monitoreo 24/7', 'Escalabilidad'],
+    gradient: 'gradient-blue',
+    number: '03'
+  },
+  {
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="8" width="32" height="32" rx="4" stroke="currentColor" stroke-width="2"/><path d="M16 28V32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M24 22V32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M32 16V32" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+    title: 'E-commerce',
+    description: 'Desarrollamos tiendas online completas con sistemas de pago seguros, gestión de inventario y UX optimizada.',
+    tags: ['Tiendas Online', 'Pasarelas de Pago', 'Inventario', 'Analytics'],
+    gradient: 'gradient-orange',
+    number: '04'
+  },
+  {
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="6" width="20" height="36" rx="4" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="36" r="2" fill="currentColor"/><line x1="20" y1="10" x2="28" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+    title: 'Aplicaciones Móviles',
+    description: 'Creamos aplicaciones móviles nativas e híbridas para iOS y Android con interfaces intuitivas y rendimiento óptimo.',
+    tags: ['Apps Nativas', 'Apps Híbridas', 'UI/UX Móvil', 'Stores'],
+    gradient: 'gradient-pink',
+    number: '05'
+  },
+  {
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2"/><path d="M24 16V24L30 28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 12L12 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M32 12L36 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+    title: 'Desarrollo de Herramientas IA',
+    description: 'Integramos inteligencia artificial en tus procesos con chatbots, análisis predictivo y automatización inteligente.',
+    tags: ['Chatbots IA', 'Machine Learning', 'Análisis Predictivo', 'Automatización'],
+    gradient: 'gradient-green',
+    number: '06'
+  },
+  {
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 16H36V36H12V16Z" stroke="currentColor" stroke-width="2"/><path d="M20 16V12H28V16" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="26" r="4" stroke="currentColor" stroke-width="2"/></svg>`,
+    title: 'Plugins para WordPress',
+    description: 'Desarrollamos plugins personalizados que extienden la funcionalidad de tu sitio WordPress con características únicas.',
+    tags: ['Plugins', 'Temas a Medida', 'Optimización WP', 'Mantenimiento'],
+    gradient: 'gradient-purple',
+    number: '07'
+  },
+  {
+    icon: `<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2"/><path d="M24 8V14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M24 34V40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 24H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M34 24H40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+    title: 'SEO y Optimización',
+    description: 'Mejoramos la visibilidad de tu sitio web en los motores de búsqueda con estrategias SEO probadas y efectivas.',
+    tags: ['SEO Técnico', 'Contenido', 'Competencia', 'Reportes'],
+    gradient: 'gradient-cyan',
+    number: '08'
+  }
+];
+---
+
+<section class="services" id="servicios" data-scroll-3d>
+  <div class="services-container">
+    <div class="section-header reveal">
+      <span class="section-tag">
+        <span class="tag-pulse"></span>
+        Nuestros Servicios
+      </span>
+      <h2 class="section-title">
+        Soluciones tecnológicas <br /><span class="text-gradient">integrales</span> para tu negocio
+      </h2>
+      <p class="section-description">
+        Ofrecemos un ecosistema completo de servicios digitales diseñado para impulsar el crecimiento de tu empresa
+      </p>
+    </div>
+
+    <div class="services-grid">
+      {services.map((service, i) => (
+        <article class={`service-card reveal reveal-delay-${(i % 4) + 1} interactive ${service.gradient}`}>
+          <div class="card-glow-border"></div>
+          <div class="card-shine"></div>
+          <div class="card-holographic"></div>
+          <div class="card-inner">
+            <div class="card-number">{service.number}</div>
+            <div class="card-icon" set:html={service.icon} />
+            <h3 class="card-title">{service.title}</h3>
+            <p class="card-description">{service.description}</p>
+            <div class="card-tags">
+              {service.tags.map(tag => (
+                <span class="card-tag">{tag}</span>
+              ))}
+            </div>
+            <div class="card-arrow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Elegant subtle hover with soft glow
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('mousemove', (e: Event) => {
+      const me = e as MouseEvent;
+      const rect = (card as HTMLElement).getBoundingClientRect();
+      const x = (me.clientX - rect.left) / rect.width;
+      const y = (me.clientY - rect.top) / rect.height;
+
+      // Subtle soft shine that follows cursor
+      const shine = card.querySelector('.card-shine') as HTMLElement;
+      if (shine) {
+        shine.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(96,176,224,0.07) 0%, transparent 60%)`;
+      }
+
+      // Soft glow border
+      const glow = card.querySelector('.card-glow-border') as HTMLElement;
+      if (glow) {
+        glow.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(96,176,224,0.25), transparent 50%)`;
+      }
+    });
+    card.addEventListener('mouseleave', () => {
+      const shine = card.querySelector('.card-shine') as HTMLElement;
+      if (shine) shine.style.background = 'transparent';
+      const glow = card.querySelector('.card-glow-border') as HTMLElement;
+      if (glow) glow.style.background = 'transparent';
+    });
+  });
+</script>
+
+<style>
+  .services {
+    padding: 8rem 3rem;
+    position: relative;
+    transform-style: preserve-3d;
+  }
+
+  .services-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    background: rgba(96, 176, 224, 0.1);
+    border: 1px solid rgba(96, 176, 224, 0.2);
+    color: var(--accent-light);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .tag-pulse {
+    width: 6px;
+    height: 6px;
+    background: #60c0f0;
+    border-radius: 50%;
+    animation: tagPulse 2s infinite;
+    box-shadow: 0 0 8px rgba(96, 192, 240, 0.6);
+  }
+
+  @keyframes tagPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  .section-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 550px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    perspective: 1200px;
+  }
+
+  .service-card {
+    position: relative;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.5s var(--ease-out-expo);
+    overflow: hidden;
+  }
+
+  .card-inner {
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-glow-border {
+    position: absolute;
+    inset: -1px;
+    border-radius: 21px;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+  }
+
+  .service-card:hover .card-glow-border {
+    opacity: 1;
+  }
+
+  .card-shine {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 20px;
+    z-index: 1;
+  }
+
+  .card-holographic {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 20px;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s;
+    mix-blend-mode: screen;
+  }
+
+  .service-card:hover {
+    border-color: rgba(96, 176, 224, 0.2);
+    background: rgba(96, 176, 224, 0.04);
+    transform: translateY(-6px);
+    box-shadow: 
+      0 20px 40px rgba(0, 0, 0, 0.2),
+      0 0 40px rgba(96, 176, 224, 0.06);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: 3;
+  }
+
+  .gradient-purple::before { background: linear-gradient(90deg, #6c5ce7, #a29bfe); }
+  .gradient-cyan::before { background: linear-gradient(90deg, #00cec9, #81ecec); }
+  .gradient-blue::before { background: linear-gradient(90deg, #0984e3, #74b9ff); }
+  .gradient-orange::before { background: linear-gradient(90deg, #e17055, #fdcb6e); }
+  .gradient-pink::before { background: linear-gradient(90deg, #fd79a8, #e84393); }
+  .gradient-green::before { background: linear-gradient(90deg, #00b894, #55efc4); }
+
+  .service-card:hover::before {
+    opacity: 1;
+  }
+
+  .card-number {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    opacity: 0.4;
+    transition: all 0.4s;
+  }
+
+  .service-card:hover .card-number {
+    opacity: 0.8;
+    color: var(--accent-light);
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--accent-light);
+    margin-bottom: 1.25rem;
+    transition: all 0.5s var(--ease-out-expo);
+  }
+
+  .service-card:hover .card-icon {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 8px rgba(96, 176, 224, 0.3));
+  }
+
+  .gradient-cyan .card-icon { color: #81ecec; }
+  .gradient-blue .card-icon { color: #74b9ff; }
+  .gradient-orange .card-icon { color: #fdcb6e; }
+  .gradient-pink .card-icon { color: #fd79a8; }
+  .gradient-green .card-icon { color: #55efc4; }
+
+  .card-title {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+
+  .service-card:hover .card-title {
+    color: var(--accent-light);
+  }
+
+  .card-description {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-tag {
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: all 0.3s;
+  }
+
+  .service-card:hover .card-tag {
+    border-color: rgba(96, 176, 224, 0.2);
+    background: rgba(96, 176, 224, 0.05);
+  }
+
+  .card-arrow {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-muted);
+    transition: all 0.4s var(--ease-out-expo);
+    opacity: 0;
+    transform: translate(-10px, 10px) rotateZ(-45deg);
+  }
+
+  .service-card:hover .card-arrow {
+    opacity: 1;
+    transform: translate(0, 0) rotateZ(0deg);
+    color: var(--accent-light);
+    background: rgba(96, 176, 224, 0.15);
+  }
+
+  @media (max-width: 1200px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .services { padding: 5rem 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .section-title br { display: none; }
+  }
+</style>

@@ -1,0 +1,216 @@
+---
+---
+
+<div class="preloader" id="preloader">
+  <div class="preloader-inner">
+    <div class="preloader-logo">
+      <img src="/logos/S Blanco.png" alt="" width="80" height="80" />
+      <div class="logo-ring"></div>
+      <div class="logo-ring ring-2"></div>
+      <div class="logo-ring ring-3"></div>
+    </div>
+    <div class="preloader-text">
+      <span class="preloader-letter" style="--i:0">S</span>
+      <span class="preloader-letter" style="--i:1">K</span>
+      <span class="preloader-letter" style="--i:2">Y</span>
+      <span class="preloader-letter" style="--i:3">L</span>
+      <span class="preloader-letter" style="--i:4">I</span>
+      <span class="preloader-letter" style="--i:5">N</span>
+      <span class="preloader-letter" style="--i:6">K</span>
+    </div>
+    <div class="preloader-bar">
+      <div class="preloader-progress" id="preloaderProgress"></div>
+    </div>
+    <div class="preloader-percent" id="preloaderPercent">0%</div>
+  </div>
+
+  <!-- Cinematic reveal panels -->
+  <div class="reveal-panel panel-left"></div>
+  <div class="reveal-panel panel-right"></div>
+</div>
+
+<script>
+  const preloader = document.getElementById('preloader');
+  const progress = document.getElementById('preloaderProgress');
+  const percent = document.getElementById('preloaderPercent');
+  const panelLeft = document.querySelector('.panel-left') as HTMLElement;
+  const panelRight = document.querySelector('.panel-right') as HTMLElement;
+
+  let counter = 0;
+  const duration = 2200;
+  const interval = duration / 100;
+
+  const timer = setInterval(() => {
+    counter++;
+    if (progress) progress.style.width = counter + '%';
+    if (percent) percent.textContent = counter + '%';
+    
+    if (counter >= 100) {
+      clearInterval(timer);
+      
+      // Smooth fade out
+      setTimeout(() => {
+        preloader?.classList.add('loaded');
+        
+        // Let the preloader fade out, then reveal page
+        setTimeout(() => {
+          document.body.classList.add('page-loaded');
+        }, 800);
+        
+        // Remove preloader after full fade
+        setTimeout(() => {
+          preloader?.remove();
+        }, 1800);
+      }, 300);
+    }
+  }, interval);
+</script>
+
+<style>
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary, #000000);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .preloader-inner {
+    text-align: center;
+    z-index: 2;
+    transition: opacity 0.6s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s;
+  }
+
+  .preloader.loaded {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .preloader.loaded .preloader-inner {
+    opacity: 0;
+    transform: scale(1.1);
+    filter: blur(10px);
+  }
+
+  .preloader-logo {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .preloader-logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    animation: preloaderPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px rgba(96, 176, 224, 0.6));
+    position: relative;
+    z-index: 2;
+  }
+
+  .logo-ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(96, 176, 224, 0.3);
+    border-radius: 50%;
+    animation: ringRotate 3s linear infinite;
+  }
+
+  .logo-ring::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: var(--accent-light, #60c0f0);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(96, 192, 240, 0.8);
+  }
+
+  .ring-2 {
+    inset: -12px;
+    animation-duration: 4s;
+    animation-direction: reverse;
+    border-color: rgba(96, 176, 224, 0.15);
+  }
+
+  .ring-3 {
+    inset: -24px;
+    animation-duration: 6s;
+    border-color: rgba(96, 176, 224, 0.08);
+  }
+
+  @keyframes ringRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes preloaderPulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(96, 176, 224, 0.6)); }
+    50% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(96, 176, 224, 0.9)); }
+  }
+
+  .preloader-text {
+    display: flex;
+    justify-content: center;
+    gap: 0.15em;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    margin-bottom: 2.5rem;
+    color: white;
+  }
+
+  .preloader-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(30px) rotateX(90deg);
+    animation: letterReveal 0.6s calc(var(--i) * 0.08s + 0.3s) forwards cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes letterReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0) rotateX(0deg);
+    }
+  }
+
+  .preloader-bar {
+    width: 200px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    margin: 0 auto 1rem;
+    overflow: hidden;
+  }
+
+  .preloader-progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4a7fd0, #60b0e0, #60c0f0);
+    border-radius: 2px;
+    box-shadow: 0 0 20px rgba(96, 176, 224, 0.5);
+    transition: width 0.05s linear;
+  }
+
+  .preloader-percent {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.1em;
+  }
+
+  /* Cinematic panels - hidden, using fade instead */
+  .reveal-panel {
+    display: none;
+  }
+</style>

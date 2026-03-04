@@ -1,0 +1,117 @@
+---
+---
+
+<div class="cursor" id="cursor">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+</div>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const dot = cursor?.querySelector('.cursor-dot') as HTMLElement;
+  const ring = cursor?.querySelector('.cursor-ring') as HTMLElement;
+
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  const trail = document.getElementById('cursorTrail') as HTMLElement;
+  let trailX = 0, trailY = 0;
+
+  if (window.innerWidth > 768) {
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (dot) {
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
+      }
+    });
+
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      trailX += (mouseX - trailX) * 0.08;
+      trailY += (mouseY - trailY) * 0.08;
+      if (ring) {
+        ring.style.left = ringX + 'px';
+        ring.style.top = ringY + 'px';
+      }
+      if (trail) {
+        trail.style.left = trailX + 'px';
+        trail.style.top = trailY + 'px';
+      }
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // Hover effects
+    document.querySelectorAll('a, button, .interactive').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        ring?.classList.add('hover');
+        dot?.classList.add('hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        ring?.classList.remove('hover');
+        dot?.classList.remove('hover');
+      });
+    });
+  }
+</script>
+
+<style>
+  .cursor-dot {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 100001;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: difference;
+  }
+
+  .cursor-ring {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 100000;
+    transform: translate(-50%, -50%);
+    transition: width 0.4s var(--ease-out-expo), height 0.4s var(--ease-out-expo), border-color 0.3s;
+    mix-blend-mode: difference;
+  }
+
+  .cursor-dot.hover {
+    width: 12px;
+    height: 12px;
+    background: var(--accent-light);
+  }
+
+  .cursor-ring.hover {
+    width: 60px;
+    height: 60px;
+    border-color: var(--accent-light);
+    background: rgba(96, 176, 224, 0.05);
+  }
+
+  .cursor-trail {
+    position: fixed;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(96, 176, 224, 0.06), transparent 70%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  @media (max-width: 768px) {
+    .cursor { display: none; }
+  }
+</style>
