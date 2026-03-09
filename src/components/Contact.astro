@@ -1,4 +1,14 @@
 ---
+const services = [
+  { value: '', label: 'Selecciona un servicio' },
+  { value: 'software', label: 'Desarrollo de Software a Medida' },
+  { value: 'cloud', label: 'Arquitectura Cloud' },
+  { value: 'ecommerce', label: 'E-commerce' },
+  { value: 'mobile', label: 'Aplicaciones Móviles' },
+  { value: 'ia', label: 'Herramientas IA' },
+  { value: 'wordpress', label: 'Plugins WordPress' },
+  { value: 'seo', label: 'SEO y Optimización' }
+];
 ---
 
 <section class="contact" id="contacto" data-scroll-3d>
@@ -32,17 +42,16 @@
 
         <div class="form-group">
           <label for="service">Servicio de interés</label>
-          <select id="service" name="service">
-            <option value="">Selecciona un servicio</option>
-            <option value="software">Desarrollo de Software a Medida</option>
-            <option value="cloud">Arquitectura Cloud</option>
-            <option value="ecommerce">E-commerce</option>
-            <option value="mobile">Aplicaciones Móviles</option>
-            <option value="ia">Herramientas IA</option>
-            <option value="wordpress">Plugins WordPress</option>
-            <option value="seo">SEO y Optimización</option>
-          </select>
-          <div class="input-line"></div>
+          <div class="select-shell">
+            <select id="service" name="service">
+              {services.map((service) => (
+                <option value={service.value}>{service.label}</option>
+              ))}
+            </select>
+            <svg class="select-icon" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M5 7.5L10 12.5L15 7.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
         </div>
 
         <div class="form-group">
@@ -51,13 +60,29 @@
           <div class="input-line"></div>
         </div>
 
-        <button type="submit" class="submit-btn magnetic">
-          <span>Enviar Mensaje</span>
+        <button type="submit" class="submit-btn" id="contactSubmitBtn">
+          <span class="submit-label">Enviar Mensaje</span>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
       </form>
+
+      <div class="contact-modal" id="contactSuccessModal" aria-hidden="true">
+        <div class="contact-modal-backdrop" data-close-modal></div>
+        <div class="contact-modal-card glass" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+          <div class="modal-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="M5 13L9 17L19 7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3 id="contactModalTitle">Mensaje enviado</h3>
+          <p>
+            Recibimos tu solicitud correctamente. Te responderemos pronto desde Skylink.
+          </p>
+          <button type="button" class="modal-close-btn" id="contactModalCloseBtn">Cerrar</button>
+        </div>
+      </div>
 
       <div class="contact-info reveal reveal-delay-2">
         <div class="info-card glass">
@@ -68,7 +93,7 @@
           </div>
           <div>
             <h4>Email</h4>
-            <p>contacto@valinkgroup.com</p>
+            <a href="mailto:contacto@valinkgroup.com" class="info-link primary-link">contacto@valinkgroup.com</a>
             <span class="info-badge">Respuesta en 24 horas</span>
           </div>
         </div>
@@ -81,7 +106,7 @@
           </div>
           <div>
             <h4>Teléfono</h4>
-            <p>+58 412-5958838</p>
+            <a href="tel:+584125958838" class="info-link primary-link">+58 412-5958838</a>
             <span class="info-badge">Lun - Vie, 9:00 - 18:00</span>
           </div>
         </div>
@@ -103,6 +128,77 @@
     </div>
   </div>
 </section>
+
+<script>
+  const contactForm = document.getElementById('contactForm');
+  const submitButton = document.getElementById('contactSubmitBtn');
+  const submitLabel = submitButton?.querySelector('.submit-label');
+  const successModal = document.getElementById('contactSuccessModal');
+  const closeModalButton = document.getElementById('contactModalCloseBtn');
+
+  const setModalState = (isOpen) => {
+    if (!successModal) return;
+    successModal.classList.toggle('is-open', isOpen);
+    successModal.setAttribute('aria-hidden', String(!isOpen));
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  };
+
+  closeModalButton?.addEventListener('click', () => setModalState(false));
+  successModal?.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target instanceof HTMLElement && target.hasAttribute('data-close-modal')) {
+      setModalState(false);
+    }
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      setModalState(false);
+    }
+  });
+
+  contactForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if (!(contactForm instanceof HTMLFormElement) || !(submitButton instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    const formData = new FormData(contactForm);
+    const payload = Object.fromEntries(formData.entries());
+
+    submitButton.disabled = true;
+    submitButton.classList.add('is-loading');
+    if (submitLabel) {
+      submitLabel.textContent = 'Enviando...';
+    }
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('No se pudo enviar el formulario');
+      }
+
+      contactForm.reset();
+      setModalState(true);
+    } catch (error) {
+      window.alert('No pudimos enviar tu mensaje en este momento. Intenta de nuevo en unos minutos.');
+    } finally {
+      submitButton.disabled = false;
+      submitButton.classList.remove('is-loading');
+      if (submitLabel) {
+        submitLabel.textContent = 'Enviar Mensaje';
+      }
+    }
+  });
+</script>
 
 <style>
   .contact {
@@ -219,6 +315,23 @@
     cursor: none;
   }
 
+  .select-shell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  }
+
+  .select-shell:focus-within {
+    border-color: rgba(96, 176, 224, 0.35);
+    background: rgba(96, 176, 224, 0.05);
+    box-shadow: 0 0 0 4px rgba(96, 176, 224, 0.08);
+  }
+
   .form-group input::placeholder,
   .form-group textarea::placeholder {
     color: var(--text-muted);
@@ -226,7 +339,19 @@
 
   .form-group select {
     appearance: none;
+    -webkit-appearance: none;
+    padding: 1rem 2rem 1rem 0;
+    border: none;
+    background: transparent;
     cursor: none;
+  }
+
+  .select-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--accent-light);
+    pointer-events: none;
+    flex-shrink: 0;
   }
 
   .form-group select option {
@@ -255,15 +380,22 @@
     width: 100%;
   }
 
+  .select-shell + .input-line {
+    display: none;
+  }
+
   .submit-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 1rem 2.5rem;
-    background: var(--gradient-1);
-    border: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    background-image: none;
+    border: 1px solid rgba(96, 176, 224, 0.28);
     border-radius: 100px;
-    color: white;
+    color: var(--text-primary);
     font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 600;
@@ -271,11 +403,109 @@
     margin-top: 0.5rem;
     width: 100%;
     justify-content: center;
+    box-shadow: none;
+    cursor: none;
   }
 
   .submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 20px 40px rgba(96, 176, 224, 0.3);
+    border-color: rgba(96, 176, 224, 0.55);
+    background: rgba(96, 176, 224, 0.08);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .submit-btn.is-loading {
+    background: rgba(96, 176, 224, 0.12);
+    border-color: rgba(96, 176, 224, 0.4);
+  }
+
+  .contact-modal {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1200;
+  }
+
+  .contact-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .contact-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .contact-modal-card {
+    position: relative;
+    z-index: 1;
+    width: min(92vw, 420px);
+    padding: 2rem;
+    border-radius: 24px;
+    text-align: center;
+    border: 1px solid rgba(96, 176, 224, 0.18);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  }
+
+  .modal-icon {
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    color: var(--accent-light);
+    background: rgba(96, 176, 224, 0.12);
+    border: 1px solid rgba(96, 176, 224, 0.22);
+  }
+
+  .modal-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .contact-modal-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-modal-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-close-btn {
+    width: 100%;
+    border: 1px solid rgba(96, 176, 224, 0.28);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+    border-radius: 999px;
+    padding: 0.95rem 1.25rem;
+    font: inherit;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: none;
+  }
+
+  .modal-close-btn:hover {
+    background: rgba(96, 176, 224, 0.08);
+    border-color: rgba(96, 176, 224, 0.45);
   }
 
   /* Contact info */
@@ -370,6 +600,16 @@
     color: white;
   }
 
+  .primary-link {
+    margin-top: 0;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+
+  .primary-link:hover {
+    color: var(--accent-light);
+  }
+
   @media (max-width: 768px) {
     .contact { padding: 5rem 1.5rem; }
     .contact-grid { grid-template-columns: 1fr; }
@@ -378,6 +618,10 @@
     body .form-group select,
     body .form-group textarea {
       cursor: auto;
+    }
+    body .submit-btn,
+    body .modal-close-btn {
+      cursor: pointer;
     }
   }
 </style>
